@@ -49,7 +49,7 @@ class TestDatabase(unittest.TestCase):
         self.assertTrue(helpers.dni_valido('00A', db.Clientes.lista))
         self.assertFalse(helpers.dni_valido('232323S', db.Clientes.lista))
         self.assertFalse(helpers.dni_valido('F35', db.Clientes.lista))
-        #self.assertFalse(helpers.dni_valido('', db.Clientes.lista))
+        self.assertFalse(helpers.dni_valido('73Y', db.Clientes.lista))
 
     def test_escritura_csv(self):
         db.Clientes.eliminar_cliente('73Y')
@@ -66,8 +66,4 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(apellido, 'Gomez')
 
 
-
-
-if __name__ == '__main__':
-   unittest.main()
 

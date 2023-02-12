@@ -1,4 +1,10 @@
 import re
+import os
+import platform
+
+
+def limpiar_pantalla():
+    os.system('cls') if platform.system() == "Windows" else os.system('clear')
 
 def dni_valido(dni, lista):
     if not re.match('[0-9]{2}[A-Z]$', dni):

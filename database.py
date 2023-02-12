@@ -10,10 +10,20 @@ class Cliente:
     
     def __str__(self):
         return f'({self.dni}){self.nombre} {self.apellido}'
+
+    def to_dict(self):
+        return {'dni': self.dni, 'nombre': self.nombre, 'apellido': self.apellido}
+
     
 
 class Clientes:
+
     lista = []
+    with open(config.DATABASE_PATH, newline='\n') as fichero:
+        reader = csv.reader(fichero, delimiter=';')
+        for dni, nombre, apellido in reader:
+            cliente = Cliente(dni, nombre, apellido)
+            lista.append(cliente)
 
     @staticmethod
     def buscar_cliente(dni):
