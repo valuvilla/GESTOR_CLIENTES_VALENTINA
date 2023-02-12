@@ -2,7 +2,7 @@
 
 
 class Cliente:
-    def __init__(self, dni, nombre, apellido, direccion, telefono, email):
+    def __init__(self, dni, nombre, apellido):
         self.dni = dni
         self.nombre = nombre
         self.apellido = apellido
@@ -12,31 +12,31 @@ class Cliente:
     
 
 class Clientes:
-    lista_clientes = []
+    lista = []
 
     @staticmethod
     def buscar_cliente(dni):
-        for cliente in Clientes.lista_clientes:
+        for cliente in Clientes.lista:
             if cliente.dni == dni:
                 return cliente
     
     @staticmethod
     def agregar_cliente(dni, nombre, apellido):
         cliente = Cliente(dni, nombre, apellido)
-        Clientes.lista_clientes.append(cliente)
+        Clientes.lista.append(cliente)
         return cliente
     
     @staticmethod
     def modificar_cliente(dni, nombre, apellido):
-        for i, cliente in enumerate(Clientes.lista_clientes):
+        for i, cliente in enumerate(Clientes.lista):
             if cliente.dni == dni:
-                cliente.lista_clientes[i].nombre = nombre
-                cliente.lista_clientes[i].apellido = apellido
-                return Clientes.lista_clientes[i]
+                cliente.lista[i].nombre = nombre
+                cliente.lista[i].apellido = apellido
+                return Clientes.lista[i]
 
     @staticmethod
     def eliminar_cliente(dni):
-        for i, cliente in enumerate(Clientes.lista_clientes):
+        for i, cliente in enumerate(Clientes.lista):
             if cliente.dni == dni:
-                del Clientes.lista_clientes[i]
+                del Clientes.lista[i]
                 return cliente
