@@ -1,4 +1,5 @@
-
+import csv
+import config
 
 
 class Cliente:
@@ -24,6 +25,7 @@ class Clientes:
     def agregar_cliente(dni, nombre, apellido):
         cliente = Cliente(dni, nombre, apellido)
         Clientes.lista.append(cliente)
+        Clientes.guardar()
         return cliente
     
     @staticmethod
@@ -32,6 +34,7 @@ class Clientes:
             if cliente.dni == dni:
                 cliente.lista[i].nombre = nombre
                 cliente.lista[i].apellido = apellido
+                Clientes.guardar()
                 return Clientes.lista[i]
 
     @staticmethod
@@ -39,4 +42,12 @@ class Clientes:
         for i, cliente in enumerate(Clientes.lista):
             if cliente.dni == dni:
                 del Clientes.lista[i]
+                Clientes.guardar()
                 return cliente
+
+    @staticmethod
+    def guardar():
+        with open(config.DATABASE_PATH, 'w', newline='\n') as fichero:
+            writer = csv.writer(fichero, delimiter=';')
+            for cliente in Clientes.lista:
+                writer.writerow((cliente.dni, cliente.nombre, cliente.apellido))
