@@ -1,4 +1,7 @@
+import csv
 import copy
+import config
+import helpers
 import unittest
 import database as db
 
@@ -21,9 +24,9 @@ class TestDatabase(unittest.TestCase):
         self.assertIsNone(cliente_no_encontrado)
 
     def test_modificar_cliente(self):
-        cliente_a_modificar = copy.copy(db.Clientes.buscar_cliente('73Y'))
-        cliente_modificado = db.Clientes.modificar_cliente('73Y', 'Victoria', 'Gonzalez')
-        self.assertEqual(cliente_a_modificar.nombre, 'Valentina')
+        cliente_a_modificar = copy.copy(db.Clientes.buscar_cliente('96X'))
+        cliente_modificado = db.Clientes.modificar_cliente('96X','Victoria','Gomez')
+        self.assertEqual(cliente_a_modificar.nombre, 'Maria')
         self.assertEqual(cliente_modificado.nombre, 'Victoria')
 
     def test_agregar_cliente(self):
@@ -40,6 +43,28 @@ class TestDatabase(unittest.TestCase):
         cliente_rebuscado= db.Clientes.buscar_cliente('85Z')
         self.assertNotEqual(cliente_eliminado,cliente_rebuscado)
         self.assertIsNone(cliente_rebuscado)
+
+    def test_dni_valido(self):
+        #Test dni valido
+        self.assertTrue(db.Clientes.dni_valido('73Y'))
+        self.assertFalse(db.Clientes.dni_valido('73y'))
+        self.assertFalse(db.Clientes.dni_valido('73'))
+        self.assertFalse(db.Clientes.dni_valido('73YY'))
+
+    def test_escritura_csv(self):
+        db.Clientes.eliminar_cliente('73Y')
+        db.Clientes.eliminar_cliente('85Z')
+        db.Clientes.modificar_cliente('96X','Victoria','Gomez')
+
+        dni, nombre, apellido= None, None, None
+        with open(config.DATABASE_PATH, 'r') as fichero:
+            reader = csv.reader(fichero, delimiter=';')
+            dni, nombre, apellido = next(reader)
+
+        self.assertEqual(dni,'96X')
+        self.assertEqual(nombre,'Victoria')
+        self.assertEqual(apellido,'Gomez')
+        
 
 
 
