@@ -1,3 +1,9 @@
+import csv
+import config
+
+
+
+
 class Cliente:
     def __init__(self, dni, nombre, apellido, direccion, telefono, email):
         self.dni = dni
