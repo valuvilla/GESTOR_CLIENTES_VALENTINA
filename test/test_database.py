@@ -1,3 +1,4 @@
+import copy
 import unittest
 import database as db
 
@@ -29,11 +30,10 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(cliente_agregado.apellido,'Rosales')
 
     def test_modificar_cliente(self):
-        #Test modificar cliente
-        cliente_sin_modificar = db.Clientes.buscar_cliente('73Y')
-        cliente_modificado= db.Clientes.modificar_cliente('73Y','Valentina','Villalobos')
-        self.assertEqual(cliente_sin_modificar.apellido,'Gonzalez')
-        self.assertEqual(cliente_modificado.apellido,'Villalobos')
+        cliente_a_modificar = copy.copy(db.Clientes.buscar('73Y'))
+        cliente_modificado = db.Clientes.modificar_cliente('73Y', 'Victoria', 'Gonzalez')
+        self.assertEqual(cliente_a_modificar.nombre, 'Valentina')
+        self.assertEqual(cliente_modificado.nombre, 'Victoria')
 
     def test_eliminar_cliente(self):
         #Test eliminar cliente
