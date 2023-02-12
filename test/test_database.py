@@ -1,6 +1,10 @@
+import csv
+import copy
+import config
+import helpers
 import unittest
 import database as db
-import copy
+
 
 class TestDatabase(unittest.TestCase):
 
@@ -30,10 +34,11 @@ class TestDatabase(unittest.TestCase):
 
     def test_modificar_cliente(self):
         #Test modificar cliente
-        cliente_sin_modificar = copy.copy(db.Clientes.buscar_cliente('73Y'))
-        cliente_modificado= db.Clientes.modificar_cliente('73Y','Valentina','Villalobos')
-        self.assertEqual(cliente_sin_modificar.apellido,'Gonzalez')
-        self.assertEqual(cliente_modificado.apellido,'Villalobos')
+        cliente_modificado = db.Clientes.modificar_cliente('73Y','Valentina','Gonzalez Rosales')
+        self.assertEqual(cliente_modificado.dni,'73Y') 
+        self.assertEqual(cliente_modificado.nombre,'Valentina')
+        self.assertEqual(cliente_modificado.apellido,'Gonzalez Rosales')
+
 
     def test_eliminar_cliente(self):
         #Test eliminar cliente
