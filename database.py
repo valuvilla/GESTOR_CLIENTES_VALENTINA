@@ -25,16 +25,16 @@ class Clientes:
     def agregar_cliente(dni, nombre, apellido):
         cliente = Cliente(dni, nombre, apellido)
         Clientes.lista.append(cliente)
-        Clientes.guardar()
+        #Clientes.guardar()
         return cliente
     
     @staticmethod
     def modificar_cliente(dni, nombre, apellido):
         for i, cliente in enumerate(Clientes.lista):
             if cliente.dni == dni:
-                cliente.lista[i].nombre = nombre
-                cliente.lista[i].apellido = apellido
-                Clientes.guardar()
+                Clientes.lista[i].nombre = nombre
+                Clientes.lista[i].apellido = apellido
+                #Clientes.guardar()
                 return Clientes.lista[i]
 
     @staticmethod
@@ -42,12 +42,12 @@ class Clientes:
         for i, cliente in enumerate(Clientes.lista):
             if cliente.dni == dni:
                 del Clientes.lista[i]
-                Clientes.guardar()
+                #Clientes.guardar()
                 return cliente
 
-    @staticmethod
-    def guardar():
-        with open(config.DATABASE_PATH, 'w', newline='\n') as fichero:
-            writer = csv.writer(fichero, delimiter=';')
-            for cliente in Clientes.lista:
-                writer.writerow((cliente.dni, cliente.nombre, cliente.apellido))
+    # @staticmethod
+    # def guardar():
+    #   with open(config.DATABASE_PATH, 'w', newline='\n') as fichero:
+           # writer = csv.writer(fichero, delimiter=';')
+           # for cliente in Clientes.lista:
+            #    writer.writerow((cliente.dni, cliente.nombre, cliente.apellido))
