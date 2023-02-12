@@ -1,6 +1,6 @@
 import copy
 import unittest
-import test.database as db
+import database as db
 
 
 class TestDatabase(unittest.TestCase):
