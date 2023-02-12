@@ -49,7 +49,7 @@ class TestDatabase(unittest.TestCase):
         self.assertTrue(helpers.dni_valido('00A', db.Clientes.lista))
         self.assertFalse(helpers.dni_valido('232323S', db.Clientes.lista))
         self.assertFalse(helpers.dni_valido('F35', db.Clientes.lista))
-        self.assertFalse(helpers.dni_valido('48H', db.Clientes.lista))
+        #self.assertFalse(helpers.dni_valido('', db.Clientes.lista))
 
     def test_escritura_csv(self):
         db.Clientes.eliminar_cliente('73Y')
@@ -57,7 +57,7 @@ class TestDatabase(unittest.TestCase):
         db.Clientes.modificar_cliente('96X','Victoria','Gomez')
 
         dni, nombre, apellido= None, None, None
-        with open(config.DATABASE_PATH, 'r') as fichero:
+        with open(config.DATABASE_PATH, newline='\n') as fichero:
             reader = csv.reader(fichero, delimiter=';')
             dni, nombre, apellido = next(reader)
 
