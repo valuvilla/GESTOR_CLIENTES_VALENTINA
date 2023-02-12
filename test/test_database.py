@@ -61,9 +61,9 @@ class TestDatabase(unittest.TestCase):
             reader = csv.reader(fichero, delimiter=';')
             dni, nombre, apellido = next(reader)
 
-        self.assertEqual(dni,'96X')
-        self.assertEqual(nombre,'Victoria')
-        self.assertEqual(apellido,'Gomez')
+        self.assertEqual(dni, '96X')
+        self.assertEqual(nombre, 'Victoria')
+        self.assertEqual(apellido, 'Gomez')
 
 
 
