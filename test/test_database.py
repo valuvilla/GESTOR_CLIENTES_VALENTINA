@@ -29,7 +29,7 @@ class TestDatabase(unittest.TestCase):
     def test_agregar_cliente(self):
         #Test agregar cliente
         cliente_agregado = db.Clientes.agregar_cliente('40T','María Del Carmen','Rosales')
-        self.assertEqual(len(db.Clientes.lista_clientes),4)
+        self.assertEqual(len(db.Clientes.lista),4)
         self.assertEqual(cliente_agregado.dni,'40T')
         self.assertEqual(cliente_agregado.nombre,'María Del Carmen')
         self.assertEqual(cliente_agregado.apellido,'Rosales')
@@ -43,6 +43,6 @@ class TestDatabase(unittest.TestCase):
 
 
 
-#if __name__ == '__main__':
-#    unittest.main()
+if __name__ == '__main__':
+   unittest.main()
 
