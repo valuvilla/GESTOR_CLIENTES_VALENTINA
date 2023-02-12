@@ -1,5 +1,6 @@
 import os
 import database as db
+import helpers
 
 def Iniciar():
     os.system('cls')
@@ -9,6 +10,23 @@ def Iniciar():
     os.system('cls')
 
     if opcion == "1":
-        print("Listar los clientes")
-        for cliente in Clientes.lista:
+        print("Listar los clientes\n")
+        for cliente in db.Clientes.lista:
             print(cliente)
+
+    elif opcion == "2":
+        print("Buscar un cliente\n")
+        dni=helpers.leer_text(3, 3, "Ingrese el DNI del cliente: ").upper()
+        cliente = db.Clientes.buscar_cliente(dni)
+        print(cliente) if cliente else print("El cliente no existe")
+
+    elif opcion == "3":
+        print("Agregar un cliente\n")
+
+        dni=None
+        while True:
+            dni=helpers.leer_text(3, 3, "Ingrese el DNI del cliente: ").upper()
+            if db.Clientes.buscar_cliente(dni):
+                print("El cliente ya existe")
+            else:
+                break
