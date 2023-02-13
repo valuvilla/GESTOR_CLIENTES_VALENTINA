@@ -13,17 +13,12 @@ class Cliente:
 
     def to_dict(self):
         return {'dni': self.dni, 'nombre': self.nombre, 'apellido': self.apellido}
-
-    
+ 
 
 class Clientes:
-
+    #Creanos la lista y carrgamos los datos
     lista = []
-    with open(config.DATABASE_PATH, newline='\n') as fichero:
-        reader = csv.reader(fichero, delimiter=';')
-        for dni, nombre, apellido in reader:
-            cliente = Cliente(dni, nombre, apellido)
-            lista.append(cliente)
+    
 
     @staticmethod
     def buscar_cliente(dni):
@@ -55,9 +50,9 @@ class Clientes:
                 #Clientes.guardar()
                 return cliente
 
-    # @staticmethod
-    # def guardar():
-    #   with open(config.DATABASE_PATH, 'w', newline='\n') as fichero:
-           # writer = csv.writer(fichero, delimiter=';')
-           # for cliente in Clientes.lista:
-            #    writer.writerow((cliente.dni, cliente.nombre, cliente.apellido))
+    @staticmethod
+    def guardar():
+        with open(config.DATABASE_PATH, 'w', newline='\n') as fichero:
+            writer = csv.writer(fichero, delimiter=';')
+            for cliente in Clientes.lista:
+                writer.writerow((cliente.dni, cliente.nombre, cliente.apellido))
