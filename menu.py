@@ -34,7 +34,7 @@ def Iniciar():
             print(Back.LIGHTGREEN_EX+"Buscando un cliente...\n")
             dni = helpers.leer_texto(3, 3, "DNI (2 int y 1 char)").upper()
             cliente = db.Clientes.buscar_cliente(dni)
-            print(cliente) if cliente else print("Cliente no encontrado.")
+            print(cliente)
 
         elif opcion == '3':
             print(Back.LIGHTGREEN_EX+"Añadiendo un cliente...\n")

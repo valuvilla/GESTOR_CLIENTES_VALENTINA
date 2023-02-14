@@ -29,7 +29,7 @@ class Clientes:
             if cliente.dni == dni: #si el dni del cliente que estamos iterando es igual al que le pasamos por parametro
                 print(Back.GREEN+"\nCliente encontrado") #imprimimos que lo encontramos
                 return  f"Nombre: {cliente.nombre} \nApellido: {cliente.apellido} \nDNI: {cliente.dni}" #y retornamos la informacion del cliente
-        return None #si no lo encontramos retornamos None
+        return Fore.RED+f"Cliente de DNI:{dni} no encontrado" #si no lo encontramos retornamos un mensaje de error
     
     @staticmethod
     def agregar_cliente(dni: int, nombre: str, apellido: str) -> Cliente:
