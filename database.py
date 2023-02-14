@@ -22,15 +22,16 @@ class Clientes:
 
     @staticmethod
     def buscar_cliente(dni):
-        for cliente in Clientes.lista:
-            if cliente.dni == dni:
+        for cliente in Clientes.lista: #La lista de clientes se llama lista
+            if cliente.dni == dni: #El cliente tiene un dni, que se compara con el dni que se busca
                 return cliente
+        return None
     
     @staticmethod
-    def agregar_cliente(dni, nombre, apellido):
+    def agregar_cliente(dni: int, nombre: str, apellido: str) -> Cliente:
         cliente = Cliente(dni, nombre, apellido)
         Clientes.lista.append(cliente)
-        #Clientes.guardar()
+        Clientes.guardar()
         return cliente
     
     @staticmethod
