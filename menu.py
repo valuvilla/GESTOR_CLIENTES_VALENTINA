@@ -60,15 +60,16 @@ def Iniciar():
                 apellido = helpers.leer_texto(
                     2, 30, f"Apellido Antiguo: {cliente.apellido} \nApellido actual (de 2 a 30 chars)").capitalize()
                 db.Clientes.modificar_cliente(cliente.dni, nombre, apellido)
-                print(f"Cliente de DNI: {cliente.dni} modificado correctamente.")
+                print(Back.GREEN+"Cliente modificado correctamenre.")
+                print(f"Nombre: {nombre} \nApellido: {apellido} \nDNI: {cliente.dni}")
             else:
-                print("Cliente no encontrado.")
+                print(Fore.RED+f"Cliente de DNI: {cliente.dni} no encontrado.")
 
         elif opcion == '5':
             print(Back.LIGHTGREEN_EX+"Borrando un cliente...\n")
             dni = helpers.leer_texto(3, 3, "DNI (2 int y 1 char)").upper()
-            print(f"Cliente de DNI: {cliente.dni} borrado correctamente.") if db.Clientes.eliminar_cliente(
-                dni) else print(f"Cliente de DNI: {cliente.dni} no encontrado.")
+            print(f"Cliente de DNI: {dni} borrado correctamente.") if db.Clientes.eliminar_cliente(
+                dni) else print(Fore.RED+f"Cliente de DNI: {dni} no encontrado.")
 
         elif opcion == '6':
             print(Back.LIGHTGREEN_EX+"Saliendo...\n")
