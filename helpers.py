@@ -12,9 +12,7 @@ def leer_texto(min: int = 0, max: int = 100, mensaje: str = None) -> str:
     while True:
         text = input()
         if len(text) >= min and len(text) <= max:
-            print("El texto es válido")
             return text
-        print("El texto es inválido")
 
     
 def dni_valido(dni, lista):
