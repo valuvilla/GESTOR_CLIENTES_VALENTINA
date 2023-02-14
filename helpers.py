@@ -2,6 +2,8 @@ import re
 import os
 import platform
 
+from colorama import Back
+
 
 def limpiar_pantalla() -> None:
     os.system('cls') if platform.system() == "Windows" else os.system('clear')
@@ -23,6 +25,7 @@ def dni_valido(dni, lista):
     #comprobar que el dni no está en la lista
     for cliente in lista:
         if cliente.dni == dni:
-            print(f"DNI:{dni} utilizado por otro cliente. \Datos del cliente: {cliente}")
+            print(f"DNI:{dni} utilizado por otro cliente")
+            print(Back.GREEN +f"Cliente Asociado al DNI({cliente.dni}): {cliente.nombre} {cliente.apellido}")
             return False
     return True
