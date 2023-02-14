@@ -60,7 +60,7 @@ def Iniciar():
                 apellido = helpers.leer_texto(
                     2, 30, f"Apellido Antiguo: {cliente.apellido} \nApellido actual (de 2 a 30 chars)").capitalize()
                 db.Clientes.modificar_cliente(cliente.dni, nombre, apellido)
-                print(Back.GREEN+"Cliente modificado correctamenre.")
+                print(Back.GREEN+"Cliente modificado correctamente.")
                 print(f"Nombre: {nombre} \nApellido: {apellido} \nDNI: {cliente.dni}")
             else:
                 print(Fore.RED+f"Cliente de DNI: {cliente.dni} no encontrado.")
