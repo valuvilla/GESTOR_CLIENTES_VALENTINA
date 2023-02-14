@@ -1,5 +1,7 @@
 import csv
 import config
+from colorama import *
+init(autoreset=True)
 
 
 class Cliente:
@@ -25,7 +27,8 @@ class Clientes:
     def buscar_cliente(dni: str):
         for cliente in Clientes.lista:  # La lista de clientes se llama lista
             if cliente.dni == dni:  # El cliente tiene un dni, que se compara con el dni que se busca
-                return f"CLIENTE ENCONTRADO \nNombre: {cliente.nombre} \nApellido: {cliente.apellido} \nDNI: {cliente.dni}"
+                r=Back.GREEN+"CLIENTE ENCONTRADO", f"\nNombre: {cliente.nombre} \nApellido: {cliente.apellido} \nDNI: {cliente.dni}"
+                return r
         return None
     
     @staticmethod
