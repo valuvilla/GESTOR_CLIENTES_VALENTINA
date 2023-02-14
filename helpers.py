@@ -7,7 +7,7 @@ def limpiar_pantalla() -> None:
     os.system('cls') if platform.system() == "Windows" else os.system('clear')
 
 
-def leer_text(min: int = 0, max: int = 100, mensaje: str = None) -> str:
+def leer_texto(min: int = 0, max: int = 100, mensaje: str = None) -> str:
     print(mensaje) if mensaje else None
     while True:
         text = input()
