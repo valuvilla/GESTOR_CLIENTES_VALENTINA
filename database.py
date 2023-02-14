@@ -27,8 +27,8 @@ class Clientes:
     def buscar_cliente(dni: str):
         for cliente in Clientes.lista:  # La lista de clientes se llama lista
             if cliente.dni == dni:  # El cliente tiene un dni, que se compara con el dni que se busca
-                r=Back.GREEN+"CLIENTE ENCONTRADO", f"\nNombre: {cliente.nombre} \nApellido: {cliente.apellido} \nDNI: {cliente.dni}"
-                return r
+                print(Back.GREEN+"\nCLIENTE ENCONTRADO")
+                return  f"Nombre: {cliente.nombre} \nApellido: {cliente.apellido} \nDNI: {cliente.dni}"
         return None
     
     @staticmethod
