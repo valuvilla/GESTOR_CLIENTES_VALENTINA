@@ -2,39 +2,42 @@ import os
 import database as db
 import helpers
 from colorama import *
+from termcolor import colored, cprint
+import matplotlib.pyplot as plt
 init(autoreset=True)
 
 def Iniciar():
     while True:
         helpers.limpiar_pantalla()
-        
-        print("========================")
-        print("  Bienvenido al Gestor  ")
-        print("========================")
-        print("[1] Listar los clientes ")
-        print("[2] Buscar un cliente   ")
-        print("[3] Añadir un cliente   ")
-        print("[4] Modificar un cliente")
-        print("[5] Borrar un cliente   ")
-        print("[6] Cerrar el Gestor    ") # CERRAR EL MANAGER
-        print("========================")
 
-        opcion = input("> ")
+        lineas=(Fore.GREEN+"=="*18)
+        print(lineas)
+        print(colored("  BIENVENIDO AL GESTOR DE CLIENTES  ", 'white', attrs=['bold'], on_color='on_green'))
+        print( lineas)
+        print(colored(Fore.LIGHTGREEN_EX+"[1]"),"Listar clientes")
+        print(colored(Fore.LIGHTGREEN_EX+"[2]"),"Buscar un cliente")
+        print(colored(Fore.LIGHTGREEN_EX+"[3]"),"Añadir un cliente")
+        print(colored(Fore.LIGHTGREEN_EX+"[4]"),"Modificar un cliente")
+        print(colored(Fore.LIGHTGREEN_EX+"[5]"),"Borrar un cliente")
+        print(colored(Fore.LIGHTGREEN_EX+"[6]"),"Cerrar el Gestor")# CERRAR EL MANAGER
+        print(lineas)
+
+        opcion = input(colored(Fore.LIGHTGREEN_EX+"> "))
         helpers.limpiar_pantalla()
 
         if opcion == '1':
-            print("Listando los clientes...\n")
+            print(Back.LIGHTGREEN_EX+"Listando los clientes...\n")
             for cliente in db.Clientes.lista:
                 print(cliente)
 
         elif opcion == '2':
-            print("Buscando un cliente...\n")
+            print(Back.LIGHTGREEN_EX+"Buscando un cliente...\n")
             dni = helpers.leer_texto(3, 3, "DNI (2 int y 1 char)").upper()
             cliente = db.Clientes.buscar(dni)
             print(cliente) if cliente else print("Cliente no encontrado.")
 
         elif opcion == '3':
-            print("Añadiendo un cliente...\n")
+            print(Back.LIGHTGREEN_EX+"Añadiendo un cliente...\n")
 
             dni = None
             while True:
@@ -48,7 +51,7 @@ def Iniciar():
             print("Cliente añadido correctamente.")
 
         elif opcion == '4':
-            print("Modificando un cliente...\n")
+            print(Back.LIGHTGREEN_EX+"Modificando un cliente...\n")
             dni = helpers.leer_texto(3, 3, "DNI (2 int y 1 char)").upper()
             cliente = db.Clientes.buscar(dni)
             if cliente:
@@ -62,13 +65,13 @@ def Iniciar():
                 print("Cliente no encontrado.")
 
         elif opcion == '5':
-            print("Borrando un cliente...\n")
+            print(Back.LIGHTGREEN_EX+"Borrando un cliente...\n")
             dni = helpers.leer_texto(3, 3, "DNI (2 int y 1 char)").upper()
             print("Cliente borrado correctamente.") if db.Clientes.borrar(
                 dni) else print("Cliente no encontrado.")
 
         elif opcion == '6':
-            print("Saliendo...\n")
+            print(Back.LIGHTGREEN_EX+"Saliendo...\n")
             break
 
         input("\nPresiona ENTER para continuar...")
