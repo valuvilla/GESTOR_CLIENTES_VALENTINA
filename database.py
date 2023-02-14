@@ -20,10 +20,11 @@ class Clientes:
     lista = []
     
 
+    # Busca un cliente por su DNI
     @staticmethod
-    def buscar_cliente(dni):
-        for cliente in Clientes.lista: #La lista de clientes se llama lista
-            if cliente.dni == dni: #El cliente tiene un dni, que se compara con el dni que se busca
+    def buscar_cliente(dni: str):
+        for cliente in Clientes.lista:  # La lista de clientes se llama lista
+            if cliente.dni == dni:  # El cliente tiene un dni, que se compara con el dni que se busca
                 return cliente
         return None
     
@@ -35,20 +36,20 @@ class Clientes:
         return cliente
     
     @staticmethod
-    def modificar_cliente(dni, nombre, apellido):
+    def modificar_cliente(dni: str, nombre: str, apellido: str) -> Cliente:
         for i, cliente in enumerate(Clientes.lista):
             if cliente.dni == dni:
                 Clientes.lista[i].nombre = nombre
                 Clientes.lista[i].apellido = apellido
-                #Clientes.guardar()
+                Clientes.guardar()
                 return Clientes.lista[i]
 
     @staticmethod
-    def eliminar_cliente(dni):
+    def eliminar_cliente(dni: int) -> Cliente:
         for i, cliente in enumerate(Clientes.lista):
             if cliente.dni == dni:
                 del Clientes.lista[i]
-                #Clientes.guardar()
+                Clientes.guardar()
                 return cliente
 
     @staticmethod

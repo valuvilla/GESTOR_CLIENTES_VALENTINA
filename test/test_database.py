@@ -62,8 +62,7 @@ class TestDatabase(unittest.TestCase):
         apellido: str = None
         with open(config.DATABASE_PATH, 'r') as file:
             reader: csv.reader = csv.reader(file, delimiter=';')
-            for row in reader:
-                dni, nombre, apellido = row
+            dni, nombre, apellido = next(reader)
             
         self.assertEqual(dni, '96X')
         self.assertEqual(nombre, 'Victoria')
