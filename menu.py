@@ -49,7 +49,7 @@ def Iniciar():
             apellido = helpers.leer_texto(2, 30, "Apellido (de 2 a 30 chars)").capitalize()
             db.Clientes.agregar_cliente(dni, nombre, apellido)
             print(Back.GREEN+"\nCliente añadido correctamente")
-            print(f"Datos del cliente \nDNI: {dni} \nNombre: {nombre} \nApellido: {apellido}.")
+            print(f"Datos del cliente \nDNI: {dni} \nNombre: {nombre} \nApellido: {apellido}")
 
         elif opcion == '4':
             print(Back.LIGHTGREEN_EX+"Modificando un cliente...\n")
@@ -57,12 +57,12 @@ def Iniciar():
             cliente = db.Clientes.buscar_cliente(dni)
             if cliente:
                 nombre = helpers.leer_texto(
-                    2, 30, f"Nombre antiguo: {cliente.nombre} \nNombre actual (de 2 a 30 chars)").capitalize()
+                    2, 30, f"Nombre antiguo: {nombre} \nNombre actual (de 2 a 30 chars)").capitalize()
                 apellido = helpers.leer_texto(
-                    2, 30, f"Apellido Antiguo: {cliente.apellido} \nApellido actual (de 2 a 30 chars)").capitalize()
-                db.Clientes.modificar_cliente(cliente.dni, nombre, apellido)
+                    2, 30, f"Apellido Antiguo: {apellido} \nApellido actual (de 2 a 30 chars)").capitalize()
+                db.Clientes.modificar_cliente(dni, nombre, apellido)
                 print(Back.GREEN+"Cliente modificado correctamente.")
-                print(f"Nombre: {nombre} \nApellido: {apellido} \nDNI: {cliente.dni}")
+                print(f"Nombre: {nombre} \nApellido: {apellido} \nDNI: {dni}")
             else:
                 print(Fore.RED+f"Cliente de DNI: {cliente.dni} no encontrado.")
 

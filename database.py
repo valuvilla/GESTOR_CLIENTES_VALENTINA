@@ -1,6 +1,7 @@
 import csv
 import config
 from colorama import *
+import pandas as pd
 init(autoreset=True)
 
 
@@ -19,7 +20,7 @@ class Cliente:
 
 class Clientes:
     #Creanos la lista y carrgamos los datos
-    lista = []
+    lista=pd.read_csv('clientes.csv')
     
 
     # Busca un cliente por su DNI
