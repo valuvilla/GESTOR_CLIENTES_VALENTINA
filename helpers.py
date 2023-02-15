@@ -20,7 +20,7 @@ def leer_texto(min: int = 0, max: int = 100, mensaje: str = None) -> str:
 def dni_valido(dni, lista):
     #comprobar que el dni tiene el formato correcto
     if not re.match('[0-9]{2}[A-Z]$', dni):
-        print(f"El formato de DNI: {dni} no es correcto")
+        print(Back.RED+f"El formato de DNI: {dni} no es correcto")
         return False
     #comprobar que el dni no está en la lista
     for cliente in lista:
