@@ -20,7 +20,7 @@ class Cliente:
 
 class Clientes:
     #Creanos la lista y carrgamos los datos
-    lista=pd.read_csv('clientes.csv')
+    lista=[]
     
 
     # Busca un cliente por su DNI
