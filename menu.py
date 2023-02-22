@@ -38,7 +38,7 @@ def Iniciar():
                 if helpers.dni_valido(dni, db.Clientes.lista):
                     break
             cliente = db.Clientes.buscar_cliente(dni)
-            print(cliente)
+            print(cliente) if cliente else print(Fore.RED+f"Cliente de DNI: {dni} no encontrado.")
 
         elif opcion == '3':
             print(Back.LIGHTGREEN_EX+"Añadiendo un cliente...\n")
