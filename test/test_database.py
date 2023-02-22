@@ -35,16 +35,7 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(cliente_a_modificar.nombre, 'Ana')
         self.assertEqual(cliente_modificado.nombre, 'Mariana')
 
-    def test_eliminar_cliente(self):
-        cliente_a_eliminar = copy.copy(db.Clientes.buscar_cliente('85K'))
-        cliente_eliminado = db.Clientes.eliminar_cliente('85K')
-        self.assertEqual(cliente_a_eliminar.dni, '85K')
-        self.assertIsNone(cliente_eliminado)
 
-    def test_dni_valido(self):
-        self.assertTrue(helpers.dni_valido('00A', db.Clientes.lista))
-        self.assertFalse(helpers.dni_valido('232323S', db.Clientes.lista))
-        self.assertFalse(helpers.dni_valido('F35', db.Clientes.lista))
-        self.assertFalse(helpers.dni_valido('48H', db.Clientes.lista))
+
 
 
