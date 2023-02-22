@@ -34,6 +34,7 @@ class TestDatabase(unittest.TestCase):
     def test_modificar_cliente(self):
         cliente_modificado = db.Clientes.modificar_cliente('28Z', 'Mariana', 'García')
         self.assertEqual(cliente_modificado.nombre, 'Mariana')
+        self.assertNotEqual(cliente_modificado.nombre, 'Ana')
 
     def test_borrar_cliente(self):
         cliente_borrado = db.Clientes.eliminar_cliente('48H')
