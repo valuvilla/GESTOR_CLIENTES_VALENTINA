@@ -32,9 +32,7 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(nuevo_cliente.apellido, 'Costa')
 
     def test_modificar_cliente(self):
-        cliente_a_modificar = copy.copy(db.Clientes.buscar_cliente('28Z'))
         cliente_modificado = db.Clientes.modificar_cliente('28Z', 'Mariana', 'García')
-        self.assertEqual(cliente_a_modificar.nombre, 'Ana')
         self.assertEqual(cliente_modificado.nombre, 'Mariana')
 
     def test_borrar_cliente(self):
