@@ -48,8 +48,8 @@ def Iniciar():
             nombre = helpers.leer_texto(2, 30, "Nombre (de 2 a 30 chars)").capitalize()
             apellido = helpers.leer_texto(2, 30, "Apellido (de 2 a 30 chars)").capitalize()
             db.Clientes.agregar_cliente(dni, nombre, apellido)
-            print(Back.GREEN+"\nCliente añadido correctamente")
-            print(f"Datos del cliente \nDNI: {dni} \nNombre: {nombre} \nApellido: {apellido}")
+            print((Back.GREEN+"\nCliente añadido correctamente"), (Fore.BLUE+'Datos del cliente:'))
+            print(f"DNI: {dni} \nNombre: {nombre} \nApellido: {apellido}")
 
         elif opcion == '4':
             print(Back.LIGHTGREEN_EX+"Modificando un cliente...\n")
