@@ -43,7 +43,7 @@ class Clientes:
         return cliente
     
     @staticmethod
-    def modificar_cliente(dni, nombre, apellido) -> Cliente:
+    def modificar_cliente(dni, nombre, apellido):
         # Busco el cliente por su DNI
         for i, cliente in enumerate(Clientes.lista):
             if cliente.dni == dni:
@@ -56,7 +56,7 @@ class Clientes:
                 return Clientes.lista[i]
 
     @staticmethod
-    def eliminar_cliente(dni) -> Cliente:
+    def eliminar_cliente(dni):
         # Recorrer la lista de clientes
         for i, cliente in enumerate(Clientes.lista):
             # Si el dni del cliente coincide con el dni pasado por parámetro
