@@ -32,7 +32,11 @@ def Iniciar():
 
         elif opcion == '2':
             print(Back.LIGHTGREEN_EX+"Buscando un cliente...\n")
-            dni = helpers.leer_texto(3, 3, "DNI (2 int y 1 char)").upper()
+            dni = None
+            while True:
+                dni = helpers.leer_texto(3, 3, "DNI (2 int y 1 char)").upper()
+                if helpers.dni_valido(dni, db.Clientes.lista):
+                    break
             cliente = db.Clientes.buscar_cliente(dni)
             print(cliente)
 
