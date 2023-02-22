@@ -56,15 +56,15 @@ class TestDatabase(unittest.TestCase):
         #Test escritura csv
         db.Clientes.eliminar_cliente('73Y')
         db.Clientes.eliminar_cliente('85Z')
-        db.Clientes.modificar_cliente('96X','Victoria','Gomez')
+        db.Clientes.modificar_cliente('28Z', 'Mariana', 'García')
+
 
         dni, nombre, apellido = None, None, None
-
-        with open(config.DATABASE_PATH, 'r') as file:
-            reader: csv.reader = csv.reader(file, delimiter=';')
+        with open(config.DATABASE_PATH, 'r') as fichero:
+            reader: csv.reader = csv.reader(fichero, delimiter=';')
             dni, nombre, apellido = next(reader)
             
-        self.assertEqual(dni, '96X')
-        self.assertEqual(nombre, 'Victoria')
-        self.assertEqual(apellido, 'Gomez')
+        self.assertEqual(dni, '28Z')
+        self.assertEqual(nombre, 'Mariana')
+        self.assertEqual(apellido, 'García')
         
