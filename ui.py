@@ -1,9 +1,10 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter.messagebox import WARNING, askokcancel
 from colorama import *
 from termcolor import colored, cprint
 import database as db
-
+import helpers
 
 class CenterWingetMin:
     def center(self,):
@@ -44,10 +45,8 @@ class MainWindows(Tk,CenterWingetMin):
         treeview.heading('Nombre',text=colored(Fore.GREEN+'Nombre'),anchor=CENTER)
         treeview.heading('Apellido',text=colored(Fore.GREEN+'Apellido'),anchor=CENTER)
 
-        #Data
-        treeview.pack()
 
-        #Buttons
+        # Scrollbar
         barra_botones=Scrollbar(frame,orient=HORIZONTAL)
         barra_botones.pack(side=BOTTOM,fill=Y)
 
@@ -58,4 +57,116 @@ class MainWindows(Tk,CenterWingetMin):
 
         # Completar treeview de clientes
         for cliente in db.Clientes.lista:
-            treeview.insert('',0,text='',values=(cliente.dni,cliente.nombre,cliente.apellido))
+            treeview.insert(
+                parent='', index='end', iid=cliente.dni,
+                values=(cliente.dni, cliente.nombre, cliente.apellido))
+
+
+
+        treeview.pack()
+
+        # Buttons frame
+        frame_buttons=Frame(self)
+        frame_buttons.pack(pady=20)
+
+        #Buttons
+        Button(frame_buttons,text=colored(Fore.GREEN+'Listar Clientes'),command=self.enumerate).grid(row=0,column=0,padx=10)
+        Button(frame_buttons,text=colored(Fore.GREEN+'Crear Cliente'),command=self.create).grid(row=0,column=1,padx=10)
+        Button(frame_buttons,text=colored(Fore.GREEN+'Editar Cliente'),command=self.edite).grid(row=0,column=2,padx=10)
+        Button(frame_buttons,text=colored(Fore.RED+'Borrar Cliente'),command=self.delete).grid(row=0,column=3,padx=10)
+
+        self.treeview=treeview
+
+    def enumerate(self):
+        self.treeview.delete(*self.treeview.get_children())
+        for cliente in db.Clientes.lista:
+            self.treeview.insert(
+                parent='', index='end', iid=cliente.dni,
+                values=(cliente.dni, cliente.nombre, cliente.apellido))
+
+    def delete(self):
+            cliente=self.treeview.focus()
+            if cliente:
+                campo=self.treeview.item(cliente, 'values')
+                confirmar = askokcancel(
+                    title=colored(Fore.BLUE+'Borrar Cliente'),
+                    message=colored(Fore.RED+f'¿Estás seguro de que quieres borrar el cliente {campo[1]} {campo[2]}?', attrs=['bold']),
+                    icon=WARNING
+                )
+                if confirmar:
+                    self.treeview.delete(cliente)
+
+
+    def create(self):
+        CreateClientWindow(self)
+
+    def edit(self):
+        if self.treeview.focus():
+            EditClientWindow(self)
+
+            
+class CreateClientWindow(Toplevel,CenterWingetMin):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title(colored(Fore.GREEN+'Crear Cliente'))
+        self.build()
+        self.center()
+
+        #Interactuar ventana
+        self.transient()
+        self.grab_set()        
+
+    def build(self):
+        frame=Frame(self)
+        frame.pack(padx=20,pady=20)
+
+        #Labels
+        Label(frame,text=colored(Fore.BLUE+'DNI (2 int y 1 upper char):')).grid(row=0,column=0)
+        Label(frame,text=colored(Fore.BLUE+'Nombre (2 a 30 chars):')).grid(row=0,column=1)
+        Label(frame,text=colored(Fore.BLUE+'Apellido (2 a 30 chars):')).grid(row=0,column=2)
+
+        #Entry
+        dni=Entry(frame)
+        dni.grid(row=1,column=0)
+        dni.bind("<KeyRelease>", lambda ev: self.validate(ev,0))
+        Nombre=Entry(frame)
+        Nombre.grid(row=1,column=1)
+        Nombre.bind("<KeyRelease>", lambda ev: self.validate(ev,1))
+        Apellido=Entry(frame)
+        Apellido.grid(row=1,column=2)
+        Apellido.bind("<KeyRelease>", lambda ev: self.validate(ev,2))
+
+        # Bottom frame
+        frame=Frame(self)
+        frame.pack(pady=10)
+
+        # Buttons
+        crear = Button(frame, text='Crear', command=self.create_client)
+        crear.configure(state=DISABLED)
+        crear.grid(row=0, column=0)
+        Button(frame, text=colored(Fore.RED+'Cancelar'), command=self.close).grid(row=0, column=1)
+
+        self.validaciones=[0,0,0]
+        self.crear=crear
+        self.dni=dni
+        self.nombre=Nombre
+        self.apellido=Apellido
+
+
+    def create_client():
+        
+
+    def close(self):
+        self.destroy()
+        self.update()
+
+    def validate(self, event, index):
+        valor= event.widget.get()
+        valido = helpers.dni_valido(
+            valor, db.Clientes.lista) if index == 0 else (valor.isalpha() and len(valor) >= 2 and len(valor) <= 30)
+        event.widget.configure(bg='Green' if valido else 'Red')
+
+        self.validaciones[index] = valido
+        self.crear.configure(state=NORMAL if self.validaciones == [1, 1, 1] else DISABLED)
+
+
