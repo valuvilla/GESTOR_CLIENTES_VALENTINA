@@ -204,18 +204,21 @@ class EditClientWindow(Toplevel, CenterWidgetMixin):
         Apellido.grid(row=1,column=2)
         Apellido.bind("<KeyRelease>", lambda ev: self.validate(ev,2))
 
+        # Valores iniciales
+        cliente=self.master.treeview.focus()
+        campo=self.master.treeview.item(cliente, 'values')
+        dni.insert(0,campo[0])
+        dni.config(state=DISABLED)
+        Nombre.insert(0,campo[1])
+        Apellido.insert(0,campo[2])
+
         # Bottom frame
         frame=Frame(self)
         frame.pack(pady=10)
 
         # Buttons
-        crear = Button(frame, text='Actualizar', command=self.update_client)
-        crear.configure(state=DISABLED)
-        crear.grid(row=0, column=0)
+        actualizar = Button(frame, text='Actualizar', command=self.update_client)
+        actualizar.grid(row=0, column=0)
         Button(frame, text=colored(Fore.RED+'Cancelar'), command=self.close).grid(row=0, column=1)
 
-        self.validaciones=[0,0,0]
-        self.crear=crear
-        self.dni=dni
-        self.nombre=Nombre
-        self.apellido=Apellido
+        # Actulizar botones activacion
