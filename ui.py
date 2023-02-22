@@ -89,12 +89,13 @@ class MainWindows(Tk,CenterWidgetMixin):
             if cliente:
                 campo=self.treeview.item(cliente, 'values')
                 confirmar = askokcancel(
-                    title=colored(Fore.BLUE+'Borrar Cliente'),
+                    title=colored(Fore.GREEN+'Confirmar borrado'),
                     message=colored(Fore.RED+f'¿Estás seguro de que quieres borrar el cliente {campo[1]} {campo[2]}?', attrs=['bold']),
                     icon=WARNING
                 )
                 if confirmar:
                     self.treeview.delete(cliente)
+                    db.Clientes.eliminar_cliente(campo[0]) #Borrar cliente de la base de datos
 
 
     def create(self):
@@ -157,6 +158,7 @@ class CreateClientWindow(Toplevel,CenterWidgetMixin):
         self.master.treeview.insert(
             parent='', index='end', iid=self.dni.get(),
             values=(self.dni.get(), self.nombre.get(), self.apellido.get()))
+        db.Clientes.agregar_cliente(self.dni.get(), self.nombre.get(), self.apellido.get())
         self.close()
 
     def close(self):
@@ -222,3 +224,30 @@ class EditClientWindow(Toplevel, CenterWidgetMixin):
         Button(frame, text=colored(Fore.RED+'Cancelar'), command=self.close).grid(row=0, column=1)
 
         # Actulizar botones activacion
+        self.validaciones=[1,1]
+
+        # Clases
+        self.actualizar=actualizar
+        self.dni=dni
+        self.nombre=Nombre
+        self.apellido=Apellido
+
+    def validate(self, event, index):
+        valor= event.widget.get()
+        valido = (valor.isalpha() and len(valor) >= 2 and len(valor) <= 30)
+        event.widget.configure(bg='Green' if valido else 'Red')
+
+        self.validaciones[index] = valido
+        self.actualizar.configure(state=NORMAL if self.validaciones == [1, 1] else DISABLED)
+
+    def update_client(self):
+        cliente=self.master.treeview.focus()
+        self.master.treeview.item(cliente, values=(
+            self.dni.get(), self.nombre.get(), self.apellido.get()))
+        db.Clientes.modificar_cliente(self.dni.get(), self.nombre.get(), self.apellido.get())
+        self.close()
+
+    def close(self):
+        self.destroy()
+        self.update()
+
