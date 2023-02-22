@@ -24,7 +24,7 @@ class Clientes:
 
     # Busca un cliente por su DNI
     @staticmethod
-    def buscar_cliente(dni: str):
+    def buscar_cliente(dni):
         for cliente in Clientes.lista: #iteramos en la lista de clientes y buscamos el dni que le pasamos por parametro
             if cliente.dni == dni: #si el dni del cliente que estamos iterando es igual al que le pasamos por parametro
                 print(Back.GREEN+"\nCliente encontrado") #imprimimos que lo encontramos
@@ -32,7 +32,7 @@ class Clientes:
         return Fore.RED+f"Cliente de DNI:{dni} no encontrado" #si no lo encontramos retornamos un mensaje de error
     
     @staticmethod
-    def agregar_cliente(dni: int, nombre: str, apellido: str) -> Cliente:
+    def agregar_cliente(dni, nombre, apellido):
         # Crear el objeto cliente.
         cliente = Cliente(dni, nombre, apellido)
         # Agregar el cliente a la lista.
@@ -43,7 +43,7 @@ class Clientes:
         return cliente
     
     @staticmethod
-    def modificar_cliente(dni: str, nombre: str, apellido: str) -> Cliente:
+    def modificar_cliente(dni, nombre, apellido) -> Cliente:
         # Busco el cliente por su DNI
         for i, cliente in enumerate(Clientes.lista):
             if cliente.dni == dni:
@@ -56,7 +56,7 @@ class Clientes:
                 return Clientes.lista[i]
 
     @staticmethod
-    def eliminar_cliente(dni: int) -> Cliente:
+    def eliminar_cliente(dni) -> Cliente:
         # Recorrer la lista de clientes
         for i, cliente in enumerate(Clientes.lista):
             # Si el dni del cliente coincide con el dni pasado por parámetro
