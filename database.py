@@ -1,7 +1,6 @@
 import csv
 import config
-from colorama import *
-import pandas as pd
+from colorama import * 
 init(autoreset=True)
 
 class Cliente:
@@ -63,7 +62,7 @@ class Clientes:
             # Si el dni del cliente coincide con el dni pasado por parámetro
             if cliente.dni == dni:
                 # Eliminar el cliente de la lista
-                del Clientes.lista[indice]
+                cliente = Clientes.lista.pop(indice)
                 # Guardar los cambios en el archivo
                 Clientes.guardar()
                 # Devolver el cliente eliminado
