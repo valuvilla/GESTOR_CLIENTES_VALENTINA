@@ -6,7 +6,7 @@ from termcolor import colored, cprint
 import matplotlib.pyplot as plt
 init(autoreset=True)
 
-def Iniciar():
+def iniciar():
     while True:
         helpers.limpiar_pantalla()
 
