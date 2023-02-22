@@ -45,7 +45,7 @@ class Clientes:
         return cliente
     
     @staticmethod
-    def modificar_clientes(dni, nombre, apellido):
+    def modificar_cliente(dni, nombre, apellido):
         for indice, cliente in enumerate(Clientes.lista):
             if cliente.dni == dni:
                 # Modificar el cliente de la lista
