@@ -57,9 +57,8 @@ class TestDatabase(unittest.TestCase):
         db.Clientes.eliminar_cliente('85Z')
         db.Clientes.modificar_cliente('96X','Victoria','Gomez')
 
-        dni= None
-        nombre= None
-        apellido= None
+        dni, nombre, apellido = None, None, None
+
         with open(config.DATABASE_PATH, 'r') as file:
             reader: csv.reader = csv.reader(file, delimiter=';')
             dni, nombre, apellido = next(reader)
