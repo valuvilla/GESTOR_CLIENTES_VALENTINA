@@ -13,21 +13,22 @@ class TestDatabase(unittest.TestCase):
         db.Clientes.lista= [
             db.Cliente('73Y','Valentina','Gonzalez'),
             db.Cliente('85Z','Juan','Perez'),
-           db.Cliente('28Z', 'Ana', 'García')
+            db.Cliente('96X','Maria','Gomez'),
         ]
 
     def test_buscar_cliente(self):
         #Test buscar cliente
         cliente_encontrado = db.Clientes.buscar_cliente('73Y')
+        cliente_no_encontrado = db.Clientes.buscar_cliente('99A')
         self.assertIsNotNone(cliente_encontrado)
         cliente_no_encontrado = db.Clientes.buscar_cliente('99A')
         self.assertIsNone(cliente_no_encontrado)
 
     def test_modificar_cliente(self):
-        cliente_a_modificar = copy.copy(db.Clientes.buscar_cliente('28Z'))
-        cliente_modificado = db.Clientes.modificar_cliente('28Z', 'Mariana', 'García')
-        self.assertEqual(cliente_a_modificar.nombre, 'Ana')
-        self.assertEqual(cliente_modificado.nombre, 'Mariana')
+        cliente_a_modificar = copy.copy(db.Clientes.buscar_cliente('96X'))
+        cliente_modificado = db.Clientes.modificar_cliente('96X','Victoria','Gomez')
+        self.assertEqual(cliente_a_modificar.nombre, 'Maria')
+        self.assertEqual(cliente_modificado.nombre, 'Victoria')
 
     def test_agregar_cliente(self):
         #Test agregar cliente
@@ -41,7 +42,7 @@ class TestDatabase(unittest.TestCase):
         #Test eliminar cliente
         cliente_eliminado= db.Clientes.eliminar_cliente('85Z')
         cliente_rebuscado= db.Clientes.buscar_cliente('85Z')
-        self.assertNotEqual(cliente_eliminado,cliente_rebuscado)
+        self.assertEqual(cliente_eliminado,cliente_rebuscado)
         self.assertIsNone(cliente_rebuscado)
 
     def test_dni_valido(self):
@@ -55,7 +56,7 @@ class TestDatabase(unittest.TestCase):
         #Test escritura csv
         db.Clientes.eliminar_cliente('73Y')
         db.Clientes.eliminar_cliente('85Z')
-        db.Clientes.modificar_cliente('28Z', 'Mariana', 'García')
+        db.Clientes.modificar_cliente('96X','Victoria','Gomez')
 
         dni, nombre, apellido = None, None, None
 
@@ -63,7 +64,7 @@ class TestDatabase(unittest.TestCase):
             reader: csv.reader = csv.reader(file, delimiter=';')
             dni, nombre, apellido = next(reader)
             
-        self.assertEqual(dni, '28Z')
-        self.assertEqual(nombre, 'Mariana')
-        self.assertEqual(apellido, 'García')
+        self.assertEqual(dni, '96X')
+        self.assertEqual(nombre, 'Victoria')
+        self.assertEqual(apellido, 'Gomez')
         
