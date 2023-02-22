@@ -6,7 +6,7 @@ from termcolor import colored, cprint
 import database as db
 import helpers
 
-class CenterWingetMin:
+class CenterWidgetMixin:
     def center(self,):
         self.update()
         w=self.winfo_width()
@@ -17,7 +17,7 @@ class CenterWingetMin:
         y=int((hs/2)-(h/2))
         self.geometry('{}x{}+{}+{}'.format(w,h,x,y))
 
-class MainWindows(Tk,CenterWingetMin):
+class MainWindows(Tk,CenterWidgetMixin):
     def __init__(self):
         super().__init__()
         self.title(colored("Gestor de Clientes", 'white', attrs=['bold'], on_color='on_green'))
@@ -105,7 +105,7 @@ class MainWindows(Tk,CenterWingetMin):
             EditClientWindow(self)
 
             
-class CreateClientWindow(Toplevel,CenterWingetMin):
+class CreateClientWindow(Toplevel,CenterWidgetMixin):
     def __init__(self, parent):
         super().__init__(parent)
         self.title(colored(Fore.GREEN+'Crear Cliente'))
@@ -153,8 +153,11 @@ class CreateClientWindow(Toplevel,CenterWingetMin):
         self.apellido=Apellido
 
 
-    def create_client():
-        
+    def create_client(self):
+        self.master.treeview.insert(
+            parent='', index='end', iid=self.dni.get(),
+            values=(self.dni.get(), self.nombre.get(), self.apellido.get()))
+        self.close()
 
     def close(self):
         self.destroy()
@@ -170,3 +173,49 @@ class CreateClientWindow(Toplevel,CenterWingetMin):
         self.crear.configure(state=NORMAL if self.validaciones == [1, 1, 1] else DISABLED)
 
 
+class EditClientWindow(Toplevel, CenterWidgetMixin):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title(colored(Fore.GREEN+'Actualizar Cliente Cliente'))
+        self.build()
+        self.center()
+
+        #Interactuar ventana
+        self.transient()
+        self.grab_set()
+
+    def build(self):
+        frame=Frame(self)
+        frame.pack(padx=20,pady=10)
+
+        #Labels
+        Label(frame,text=colored(Fore.BLUE+'DNI (no editable):')).grid(row=0,column=0)
+        Label(frame,text=colored(Fore.BLUE+'Nombre (2 a 30 chars):')).grid(row=0,column=1)
+        Label(frame,text=colored(Fore.BLUE+'Apellido (2 a 30 chars):')).grid(row=0,column=2)
+
+        #Entry
+        dni=Entry(frame)
+        dni.grid(row=1,column=0)
+        dni.bind("<KeyRelease>", lambda ev: self.validate(ev,0))
+        Nombre=Entry(frame)
+        Nombre.grid(row=1,column=1)
+        Nombre.bind("<KeyRelease>", lambda ev: self.validate(ev,1))
+        Apellido=Entry(frame)
+        Apellido.grid(row=1,column=2)
+        Apellido.bind("<KeyRelease>", lambda ev: self.validate(ev,2))
+
+        # Bottom frame
+        frame=Frame(self)
+        frame.pack(pady=10)
+
+        # Buttons
+        crear = Button(frame, text='Actualizar', command=self.update_client)
+        crear.configure(state=DISABLED)
+        crear.grid(row=0, column=0)
+        Button(frame, text=colored(Fore.RED+'Cancelar'), command=self.close).grid(row=0, column=1)
+
+        self.validaciones=[0,0,0]
+        self.crear=crear
+        self.dni=dni
+        self.nombre=Nombre
+        self.apellido=Apellido
