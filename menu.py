@@ -3,7 +3,6 @@ import database as db
 import helpers
 from colorama import *
 from termcolor import colored, cprint
-import matplotlib.pyplot as plt
 init(autoreset=True)
 
 def iniciar():
@@ -82,4 +81,3 @@ def iniciar():
 
         input("\nPresiona ENTER para continuar...")
 
-Iniciar()

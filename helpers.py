@@ -1,8 +1,9 @@
 import re
 import os
 import platform
-
-from colorama import Back
+from colorama import *
+from termcolor import colored, cprint
+init(autoreset=True)
 
 
 def limpiar_pantalla() -> None:
@@ -19,12 +20,12 @@ def leer_texto(min: int = 0, max: int = 100, mensaje: str = None) -> str:
     
 def dni_valido(dni, lista):
     #comprobar que el dni tiene el formato correcto
-    if not re.match('[0-9]{2}[A-Z]$', dni):
+    if not re.match('[0-9]{2}[A-Z]$', dni) or not re.match('[0-9]{8}[A-Z]$', dni):
         print(Back.RED+f"El formato de DNI: {dni} no es correcto")
         return False
     #comprobar que el dni no está en la lista
     for cliente in lista:
         if cliente.dni == dni:
-            print((f"DNI:{dni} utilizado por otro cliente"), (Back.CYAN +f"\nCliente Asociado al DNI({cliente.dni}): {cliente.nombre} {cliente.apellido}\n"))
+            print((f"DNI:{dni} utilizado por otro cliente"), ((Back.CYAN+(f"\nCliente Asociado al DNI({cliente.dni}:"),("{cliente.nombre} {cliente.apellido}\n"))))
             return False
     return True

@@ -20,7 +20,7 @@ class CenterWidgetMixin:
 class MainWindows(Tk,CenterWidgetMixin):
     def __init__(self):
         super().__init__()
-        self.title(colored("Gestor de Clientes", 'white', attrs=['bold'], on_color='on_green'))
+        self.title(("Gestor de Clientes").upper())
         self.build()
         self.center()
 
@@ -34,50 +34,46 @@ class MainWindows(Tk,CenterWidgetMixin):
         treeview.pack()
 
         #Column format
-        treeview.columns('#0',width=0,stretch=NO)
-        treeview.column('DNI',anchor=CENTER,width=100)
-        treeview.column('Nombre',anchor=CENTER,width=100)
-        treeview.column('Apellido',anchor=CENTER,width=100)
+        treeview.column('#0',width=0,stretch=NO)
+        treeview.column('DNI',anchor=CENTER)
+        treeview.column('Nombre',anchor=CENTER)
+        treeview.column('Apellido',anchor=CENTER)
 
         #Headings
         treeview.heading('#0',text='',anchor=CENTER)
-        treeview.heading('DNI',text=colored(Fore.GREEN+'DNI'),anchor=CENTER)
-        treeview.heading('Nombre',text=colored(Fore.GREEN+'Nombre'),anchor=CENTER)
-        treeview.heading('Apellido',text=colored(Fore.GREEN+'Apellido'),anchor=CENTER)
+        treeview.heading('DNI',text=('DNI'),anchor=CENTER)
+        treeview.heading('Nombre',text=('Nombre'),anchor=CENTER)
+        treeview.heading('Apellido',text=('Apellido'),anchor=CENTER)
 
 
         # Scrollbar
-        barra_botones=Scrollbar(frame,orient=HORIZONTAL)
-        barra_botones.pack(side=BOTTOM,fill=Y)
+        scrollbar = Scrollbar(frame)
+        scrollbar.pack(side=RIGHT, fill=Y)
+        treeview['yscrollcommand'] = scrollbar.set
 
-        treeview = ttk.Treeview(frame,yscrollcommand=barra_botones.set)
-        treeview['columns']=('DNI','Nombre','Apellido')
-        treeview.pack()
-
-
-        # Completar treeview de clientes
         for cliente in db.Clientes.lista:
             treeview.insert(
                 parent='', index='end', iid=cliente.dni,
                 values=(cliente.dni, cliente.nombre, cliente.apellido))
 
-
-
         treeview.pack()
+
+        frame = Frame(self)
+        frame.pack(pady=20)
 
         # Buttons frame
         frame_buttons=Frame(self)
         frame_buttons.pack(pady=20)
 
         #Buttons
-        Button(frame_buttons,text=colored(Fore.GREEN+'Listar Clientes'),command=self.enumerate).grid(row=0,column=0,padx=10)
-        Button(frame_buttons,text=colored(Fore.GREEN+'Crear Cliente'),command=self.create).grid(row=0,column=1,padx=10)
-        Button(frame_buttons,text=colored(Fore.GREEN+'Editar Cliente'),command=self.edite).grid(row=0,column=2,padx=10)
-        Button(frame_buttons,text=colored(Fore.RED+'Borrar Cliente'),command=self.delete).grid(row=0,column=3,padx=10)
+        Button(frame_buttons,text='Deseleccionar', command=self.notselected).grid(row=0,column=0,padx=10)
+        Button(frame_buttons,text='Crear Cliente',command=self.create).grid(row=0,column=1,padx=10)
+        Button(frame_buttons,text='Editar Cliente',command=self.edit).grid(row=0,column=2,padx=10)
+        Button(frame_buttons,text='Borrar Cliente',command=self.delete).grid(row=0,column=3,padx=10)
 
         self.treeview=treeview
 
-    def enumerate(self):
+    def notselected(self):
         self.treeview.delete(*self.treeview.get_children())
         for cliente in db.Clientes.lista:
             self.treeview.insert(
@@ -89,8 +85,8 @@ class MainWindows(Tk,CenterWidgetMixin):
             if cliente:
                 campo=self.treeview.item(cliente, 'values')
                 confirmar = askokcancel(
-                    title=colored(Fore.GREEN+'Confirmar borrado'),
-                    message=colored(Fore.RED+f'¿Estás seguro de que quieres borrar el cliente {campo[1]} {campo[2]}?', attrs=['bold']),
+                    title=('Confirmar borrado'),
+                    message=(f'¿Estás seguro de que quieres borrar el cliente {campo[1]} {campo[2]}?'),
                     icon=WARNING
                 )
                 if confirmar:
@@ -109,7 +105,7 @@ class MainWindows(Tk,CenterWidgetMixin):
 class CreateClientWindow(Toplevel,CenterWidgetMixin):
     def __init__(self, parent):
         super().__init__(parent)
-        self.title(colored(Fore.GREEN+'Crear Cliente'))
+        self.title('Crear Cliente')
         self.build()
         self.center()
 
@@ -122,9 +118,9 @@ class CreateClientWindow(Toplevel,CenterWidgetMixin):
         frame.pack(padx=20,pady=20)
 
         #Labels
-        Label(frame,text=colored(Fore.BLUE+'DNI (2 int y 1 upper char):')).grid(row=0,column=0)
-        Label(frame,text=colored(Fore.BLUE+'Nombre (2 a 30 chars):')).grid(row=0,column=1)
-        Label(frame,text=colored(Fore.BLUE+'Apellido (2 a 30 chars):')).grid(row=0,column=2)
+        Label(frame,text='DNI (2 int y 1 upper char):').grid(row=0,column=0)
+        Label(frame,text='Nombre (2 a 30 chars):').grid(row=0,column=1)
+        Label(frame,text='Apellido (2 a 30 chars):').grid(row=0,column=2)
 
         #Entry
         dni=Entry(frame)
@@ -145,7 +141,7 @@ class CreateClientWindow(Toplevel,CenterWidgetMixin):
         crear = Button(frame, text='Crear', command=self.create_client)
         crear.configure(state=DISABLED)
         crear.grid(row=0, column=0)
-        Button(frame, text=colored(Fore.RED+'Cancelar'), command=self.close).grid(row=0, column=1)
+        Button(frame, text=('Cancelar'), command=self.close).grid(row=0, column=1)
 
         self.validaciones=[0,0,0]
         self.crear=crear
@@ -178,7 +174,7 @@ class CreateClientWindow(Toplevel,CenterWidgetMixin):
 class EditClientWindow(Toplevel, CenterWidgetMixin):
     def __init__(self, parent):
         super().__init__(parent)
-        self.title(colored(Fore.GREEN+'Actualizar Cliente Cliente'))
+        self.title('Actualizar Cliente Cliente')
         self.build()
         self.center()
 
@@ -191,9 +187,9 @@ class EditClientWindow(Toplevel, CenterWidgetMixin):
         frame.pack(padx=20,pady=10)
 
         #Labels
-        Label(frame,text=colored(Fore.BLUE+'DNI (no editable):')).grid(row=0,column=0)
-        Label(frame,text=colored(Fore.BLUE+'Nombre (2 a 30 chars):')).grid(row=0,column=1)
-        Label(frame,text=colored(Fore.BLUE+'Apellido (2 a 30 chars):')).grid(row=0,column=2)
+        Label(frame,text=('DNI (no modificable):')).grid(row=0,column=0)
+        Label(frame,text='Nombre (2 a 30 chars):').grid(row=0,column=1)
+        Label(frame,text='Apellido (2 a 30 chars):').grid(row=0,column=2)
 
         #Entry
         dni=Entry(frame)
@@ -221,7 +217,7 @@ class EditClientWindow(Toplevel, CenterWidgetMixin):
         # Buttons
         actualizar = Button(frame, text='Actualizar', command=self.update_client)
         actualizar.grid(row=0, column=0)
-        Button(frame, text=colored(Fore.RED+'Cancelar'), command=self.close).grid(row=0, column=1)
+        Button(frame, text='Cancelar', command=self.close).grid(row=0, column=1)
 
         # Actulizar botones activacion
         self.validaciones=[1,1]
