@@ -76,7 +76,7 @@ def iniciar():
                 dni) else print(Fore.RED+f"Cliente de DNI: {dni} no encontrado.")
 
         elif opcion == '6':
-            print(Back.LIGHTGREEN_EX+"Saliendo...\n")
+            print(Back.MAGENTA+"SALIENDO\n")
             break
 
         input("\nPresiona ENTER para continuar...")

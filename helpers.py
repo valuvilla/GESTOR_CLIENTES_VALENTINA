@@ -27,6 +27,6 @@ def dni_valido(dni, lista):
     for cliente in lista:
         if cliente.dni == dni:
             print((f"DNI:{dni} utilizado por otro cliente"))
-            print(Back.CYAN+(f"\nCliente Asociado al DNI({cliente.dni}:"),("{cliente.nombre} {cliente.apellido}\n"))
+            print(Back.CYAN+(f"\nCliente Asociado al DNI({cliente.dni}: {cliente.nombre} {cliente.apellido}\n"))
             return False
     return True
