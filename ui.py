@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 from tkinter.messagebox import WARNING, askokcancel
 from colorama import *
 from termcolor import colored, cprint
@@ -66,19 +67,11 @@ class MainWindows(Tk,CenterWidgetMixin):
         frame_buttons.pack(pady=20)
 
         #Buttons
-        Button(frame_buttons,text='Deseleccionar', command=self.notselected).grid(row=0,column=0,padx=10)
         Button(frame_buttons,text='Crear Cliente',command=self.create).grid(row=0,column=1,padx=10)
         Button(frame_buttons,text='Editar Cliente',command=self.edit).grid(row=0,column=2,padx=10)
         Button(frame_buttons,text='Borrar Cliente',command=self.delete).grid(row=0,column=3,padx=10)
 
         self.treeview=treeview
-
-    def notselected(self):
-        self.treeview.delete(*self.treeview.get_children())
-        for cliente in db.Clientes.lista:
-            self.treeview.insert(
-                parent='', index='end', iid=cliente.dni,
-                values=(cliente.dni, cliente.nombre, cliente.apellido))
 
     def delete(self):
             cliente=self.treeview.focus()
@@ -92,15 +85,18 @@ class MainWindows(Tk,CenterWidgetMixin):
                 if confirmar:
                     self.treeview.delete(cliente)
                     db.Clientes.eliminar_cliente(campo[0]) #Borrar cliente de la base de datos
-
-
+                    messagebox.showinfo( 
+                        title=('Cliente borrado'),
+                        message=(f'El cliente {campo[1]} {campo[2]} ha sido borrado correctamente'),
+                        icon='info'
+                    )
+    
     def create(self):
         CreateClientWindow(self)
 
     def edit(self):
         if self.treeview.focus():
             EditClientWindow(self)
-
             
 class CreateClientWindow(Toplevel,CenterWidgetMixin):
     def __init__(self, parent):
@@ -155,6 +151,11 @@ class CreateClientWindow(Toplevel,CenterWidgetMixin):
             parent='', index='end', iid=self.dni.get(),
             values=(self.dni.get(), self.nombre.get(), self.apellido.get()))
         db.Clientes.agregar_cliente(self.dni.get(), self.nombre.get(), self.apellido.get())
+        messagebox.showinfo(
+            title=('Cliente creado'),
+            message=(f'El cliente {self.nombre.get()} {self.apellido.get()} ha sido creado correctamente'),
+            icon='info'
+        )
         self.close()
 
     def close(self):
@@ -174,7 +175,7 @@ class CreateClientWindow(Toplevel,CenterWidgetMixin):
 class EditClientWindow(Toplevel, CenterWidgetMixin):
     def __init__(self, parent):
         super().__init__(parent)
-        self.title('Actualizar Cliente Cliente')
+        self.title('Actualizar Cliente')
         self.build()
         self.center()
 
@@ -236,14 +237,19 @@ class EditClientWindow(Toplevel, CenterWidgetMixin):
         self.validaciones[index] = valido
         self.actualizar.configure(state=NORMAL if self.validaciones == [1, 1] else DISABLED)
 
+
     def update_client(self):
         cliente=self.master.treeview.focus()
         self.master.treeview.item(cliente, values=(
             self.dni.get(), self.nombre.get(), self.apellido.get()))
         db.Clientes.modificar_cliente(self.dni.get(), self.nombre.get(), self.apellido.get())
+        messagebox.showinfo(
+            title=('Cliente actualizado'),
+            message=(f'El cliente {self.nombre.get()} {self.apellido.get()} ha sido actualizado correctamente'),
+            icon='info'
+        )
         self.close()
 
     def close(self):
         self.destroy()
         self.update()
-
