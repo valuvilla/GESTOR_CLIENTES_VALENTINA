@@ -1,4 +1,5 @@
 import os
+import re
 import database as db
 import helpers
 from colorama import *
@@ -34,7 +35,7 @@ def iniciar():
             dni = None
             while True:
                 dni = helpers.leer_texto(3, 3, "DNI (2 int y 1 char)").upper()
-                if helpers.dni_valido(dni, db.Clientes.lista):
+                if re.match('[0-9]{2}[A-Z]$', dni):
                     break
             cliente = db.Clientes.buscar_cliente(dni)
             print(cliente) if cliente else print(Fore.RED+f"Cliente de DNI: {dni} no encontrado.")
